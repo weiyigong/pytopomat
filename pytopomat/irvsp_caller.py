@@ -77,8 +77,8 @@ class IRVSPCaller:
 
         #if sgn not in ssgs:  # non-symmorphic; this doesn't work!
             
-        self.modify_outcar()
-        sgn = 2  # SG 2 (only E and I)
+        # self.modify_outcar()
+        # sgn = 2  # SG 2 (only E and I)
 
         # Call irvsp
         cmd_list = ["irvsp", "-sg", str(sgn), "-v", str(v)]
