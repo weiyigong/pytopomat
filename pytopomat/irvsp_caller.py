@@ -76,6 +76,7 @@ class IRVSPCaller:
         # Remove SGOs from OUTCAR other than identity and inversion to avoid errors
 
         if sgn not in ssgs:  # non-symmorphic; this doesn't work!
+            print("spacegroup is non-symmorphic, Ci hase forced!")
             self.modify_outcar()
             sgn = 2  # SG 2 (only E and I)
 
