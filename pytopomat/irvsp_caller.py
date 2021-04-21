@@ -15,6 +15,7 @@ from monty.serialization import loadfn
 
 from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
 from pymatgen.core import Structure
+from pymatgen.io.vasp.outputs import Kpoints
 
 import numpy as np
 
@@ -178,12 +179,12 @@ class IRVSPOutput(MSONable):
         self.soc = soc
         self.spin_polarized = spin_polarized
         self.parity_eigenvals = parity_eigenvals
-
+        self.kpoints = Kpoints.from_file("/Users/jeng-yuantsai/anaconda3/envs/workflow/lib/python3.7/site-packages/pytopomat/pytopomat/tests/irvsp_read_ir/launcher_2021-04-17-06-51-55-570379/KPOINTS")
         self._parse_stdout(irvsp_output)
 
     def _parse_stdout(self, irvsp_output):
 
-        try:
+        # try:
             with open(irvsp_output, "r") as file:
                 lines = file.readlines()
 
@@ -217,20 +218,27 @@ class IRVSPOutput(MSONable):
                 self.spin_polarized = spin_polarized
 
                 # Define TRIM labels in units of primitive reciprocal vectors
-                trim_labels = ["gamma", "x", "y", "z", "s", "t", "u", "r"]
-                trim_pts = [
-                    (0.0, 0.0, 0.0),
-                    (0.5, 0.0, 0.0),
-                    (0.0, 0.5, 0.0),
-                    (0.0, 0.0, 0.5),
-                    (0.5, 0.5, 0.0),
-                    (0.0, 0.5, 0.5),
-                    (0.5, 0.0, 0.5),
-                    (0.5, 0.5, 0.5),
-                ]
+                #******
 
-                trim_dict = {pt: label for (pt, label) in zip(trim_pts, trim_labels)}
+                # trim_labels = ["gamma", "x", "y", "z", "s", "t", "u", "r"]
+                # trim_pts = [
+                #     (0.0, 0.0, 0.0),
+                #     (0.5, 0.0, 0.0),
+                #     (0.0, 0.5, 0.0),
+                #     (0.0, 0.0, 0.5),
+                #     (0.5, 0.5, 0.0),
+                #     (0.0, 0.5, 0.5),
+                #     (0.5, 0.0, 0.5),
+                #     (0.5, 0.5, 0.5),
+                # ]
 
+                # trim_dict = {pt: label for (pt, label) in zip(trim_pts, trim_labels)}
+                trim_dict = dict(zip(self.kpoints.labels, self.kpoints.kpts))
+                trim_dict.pop(None)
+                trim_dict = {pt: label for (pt, label) in zip([(round(pt[0], 3), round(pt[1], 3), round(pt[2], 3))
+                                                               for pt in list(trim_dict.values())], trim_dict.keys())}
+                print(trim_dict)
+                #*******
                 # Dicts with kvec index as keys
                 parity_eigenvals = {}
 
@@ -240,53 +248,75 @@ class IRVSPOutput(MSONable):
                         block_start = idx + 1
                         break
 
-                trace_start = False
+                kpt_wanted, trace_start = False, False
                 for idx, line in enumerate(lines[block_start:]):
                     if line.startswith("k = "):  # New kvec
                         line_list = line.split(" ")[2:]
                         kvec = tuple([float(i) for i in line_list])
+                        print(kvec)
+                        if kvec not in trim_dict.keys():
+                            continue
                         trim_label = trim_dict[kvec]
+                        kpt_wanted = True
 
-                    if "bnd ndg" in line:  # find inversion symmop position
+                    if "The point group is" in line and kpt_wanted:
+                        point_gp_at_k = line.split("The point group is")[1].strip()
+                        pg_character_table = []
+                    if "                   E" in line and kpt_wanted:
+                        pg_character_table.append(line.strip())
+                    if "       G" in line and kpt_wanted:
+                        pg_character_table.append(line.strip())
+
+
+                    if "bnd ndg" in line and kpt_wanted:  # find inversion symmop position
                         trace_start = True  # Start of block of traces
-                        bnds, ndgs, bnd_evs, inv_evs = [], [], [], []
+                        bnds, ndgs, bnd_evs, inv_evs, reps = [], [], [], [], []
                         line_list = line.strip().split(" ")
                         symmops = [i for i in line_list if i]
-                        inv_num = symmops.index("I") - 3  # subtract bnd, ndg, ev
+                        inv_num = symmops.index("E") - 3  # subtract bnd, ndg, ev
                         num_ops = len(symmops) - 3  # subtract bnd, ndg, ev
-
-                    if trace_start and "0" in line:  # full trace line, not a blank line
+                    if kpt_wanted and trace_start and "0" in line:  # full trace line, not a blank line
+                        head_line = line.split()
+                        try:
+                            bdx = int(head_line[0])
+                        except:
+                            continue
                         line_list = line[6:].strip()
-                        line_list = line_list.split("=", 1)[
-                            0
-                        ]  # delete irrep label at end of line
+                        line_list = line_list.split("=", 1)[0]
+
+                          # delete irrep label at end of line
                         #line_list = [i for i in line_list.split(" ") if i]
 
-                        # Check that trace line is complete, no ?? or errors
-                        if len(line_list) > 30:  # symmops + band eigenval
+                        # Check that trace line is complete, no ?? or error
+                        if len(line_list) > 30 and len(line.split("=")) == 2:  # symmops + band eigenval
                             bnd = int(line[:3].strip())  # band index
                             ndg = int(line[3:6].strip())  # band degeneracy
                             bnd_ev = float(line[6:16].strip())
-                            inv_ev = float(line[27:33].strip())
-                            
-                            if not np.isclose(inv_ev%1.0, 0.0, rtol=0, atol=0.03) or \
-                               not np.isclose(inv_ev%1.0, 1.0, rtol=0, atol=0.03):
-                               warnings.warn("IRVSP output data has non-integer parity eigenvalues!")
+                            # inv_ev = float(line[27:33].strip())
+                            irs = line.split("=")[1]
+
+                            # if not np.isclose(inv_ev%1.0, 0.0, rtol=0, atol=0.03) or \
+                            #    not np.isclose(inv_ev%1.0, 1.0, rtol=0, atol=0.03):
+                            #    warnings.warn("IRVSP output data has non-integer parity eigenvalues!")
 
                             bnds.append(bnd)
                             ndgs.append(ndg)
                             bnd_evs.append(bnd_ev)
-                            inv_evs.append(inv_ev)
+                            # inv_evs.append(inv_ev)
+                            reps.append(irs)
 
                     if "*****" in line:  # end of block
+                        kpt_start = False
                         trace_start = False
                         kvec_data = {
                             "band_index": bnds,
                             "band_degeneracy": ndgs,
                             "band_eigenval": bnd_evs,
-                            "inversion_eigenval": inv_evs,
+                            # "inversion_eigenval": inv_evs,
+                            "irreducible_reps": reps,
+                            "point_group": point_gp_at_k,
+                            "pg_character_table": pg_character_table
                         }
-
                         if self.spin_polarized:
                             if trim_label in parity_eigenvals.keys():
                                 parity_eigenvals[trim_label]["down"] = kvec_data
@@ -297,7 +327,8 @@ class IRVSPOutput(MSONable):
 
             self.parity_eigenvals = parity_eigenvals
 
-        except:
-            warnings.warn(
-                "irvsp output not found. Setting instance attributes from direct inputs!"
-            )
+        # except Exception as er:
+        #     warnings.warn(
+        #         "irvsp output not found. Setting instance attributes from direct inputs!"
+        #     )
+        #     print(er)
