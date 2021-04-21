@@ -76,13 +76,13 @@ class IRVSPCaller:
 
         # Remove SGOs from OUTCAR other than identity and inversion to avoid errors
 
-        if sgn not in ssgs:  # non-symmorphic; this doesn't work!
-            print("spacegroup is non-symmorphic, Ci hase forced!")
-            self.modify_outcar()
-            sgn = 2  # SG 2 (only E and I)
+        # if sgn not in ssgs:  # non-symmorphic; this doesn't work!
+        #     print("spacegroup is non-symmorphic, Ci hase forced!")
+        #     self.modify_outcar()
+        #     sgn = 2  # SG 2 (only E and I)
 
         # Call irvsp
-        cmd_list = ["irvsp", "-sg", str(sgn), "-v", str(v)]
+        cmd_list = ["irvsp", "-sg", str(166), "-v", str(v)]
         with open("outir.txt", "w") as out, open("err.txt", "w") as err:
             process = subprocess.Popen(cmd_list, stdout=out, stderr=err)
 
