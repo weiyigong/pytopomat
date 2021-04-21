@@ -181,7 +181,7 @@ class IRVSPOutput(MSONable):
         self.spin_polarized = spin_polarized
         self.parity_eigenvals = parity_eigenvals
         self.kpoints = kpoints
-        self._parse_stdout(irvsp_output, Kpoints)
+        self._parse_stdout(irvsp_output, kpoints)
 
     def _parse_stdout(self, irvsp_output):
 
