@@ -10,6 +10,8 @@ fireworks:
   params:
     parents: 2
     mode: line
+    input_set_overrides:
+      kpoints_line_density: 1
 - fw: pytopomat.workflows.fireworks.IrvspFW
   params:
     parents: 3
