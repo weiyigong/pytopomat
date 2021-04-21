@@ -27,6 +27,7 @@ from fireworks import explicit_serialize, FiretaskBase, FWAction
 from fireworks.utilities.fw_serializers import DATETIME_HANDLER
 
 from atomate.utils.utils import env_chk, get_logger
+from atomate.atomate.utils.database import CalcDb
 from atomate.vasp.database import VaspCalcDb
 
 
@@ -145,9 +146,10 @@ class IRVSPToDb(FiretaskBase):
             with open("irvsp.json", "w") as f:
                 f.write(json.dumps(d, default=DATETIME_HANDLER, indent=4))
         else:
-            db = VaspCalcDb.from_db_file(db_file, admin=True)
+            # db = VaspCalcDb.from_db_file(db_file, admin=True)
+            db = CalcDb.from_db_file(db_file)
             # db.collection = db.db["irvsp"]
-            db.collection.insert_one(d)
+            t_id = db.insert_one(d)
             logger.info("IRVSP calculation complete.")
         return FWAction()
 
