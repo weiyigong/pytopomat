@@ -80,7 +80,7 @@ class IRVSPCaller:
             # print("spacegroup is non-symmorphic, Ci hase forced!")
             print("spacegroup is non-symmorphic, version-2 hase forced!")
             # self.modify_outcar()
-            sgn = 2  # SG 2 (only E and I)
+            v = 2  # SG 2 (only E and I)
 
         # Call irvsp
         cmd_list = ["irvsp", "-sg", str(sgn), "-v", str(v)]
