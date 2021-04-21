@@ -146,7 +146,7 @@ class IRVSPToDb(FiretaskBase):
                 f.write(json.dumps(d, default=DATETIME_HANDLER, indent=4))
         else:
             db = VaspCalcDb.from_db_file(db_file, admin=True)
-            db.collection = db.db["irvsp"]
+            # db.collection = db.db["irvsp"]
             db.collection.insert_one(d)
             logger.info("IRVSP calculation complete.")
         return FWAction()
@@ -183,7 +183,7 @@ class Vasp2TraceToDb(FiretaskBase):
                 f.write(json.dumps(d, default=DATETIME_HANDLER))
         else:
             db = VaspCalcDb.from_db_file(db_file, admin=True)
-            # db.collection = db.db["vasp2trace"]
+            db.collection = db.db["vasp2trace"]
             db.collection.insert_one(d)
             logger.info("Vasp2trace calculation complete.")
         return FWAction()
