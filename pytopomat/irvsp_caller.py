@@ -82,7 +82,7 @@ class IRVSPCaller:
         #     sgn = 2  # SG 2 (only E and I)
 
         # Call irvsp
-        cmd_list = ["irvsp", "-sg", str(166), "-v", str(v)]
+        cmd_list = ["irvsp", "-sg", str(sgn), "-v", str(v)]
         with open("outir.txt", "w") as out, open("err.txt", "w") as err:
             process = subprocess.Popen(cmd_list, stdout=out, stderr=err)
 
