@@ -91,11 +91,11 @@ class IRVSPCaller:
         self.output = None
 
         # Process output
-        # if path.isfile("outir.txt"):
-        #     self.output = IRVSPOutput("outir.txt", Kpoints.from_file("KPOINTS"))
-        #
-        # else:
-        #     raise FileNotFoundError()
+        if path.isfile("outir.txt"):
+            self.output = IRVSPOutput("outir.txt", Kpoints.from_file("KPOINTS"))
+
+        else:
+            raise FileNotFoundError()
 
     @staticmethod
     def modify_outcar(name="OUTCAR.bkp"):
