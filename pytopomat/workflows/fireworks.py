@@ -37,7 +37,7 @@ class IrvspFW(Firework):
         structure=None,
         name="irvsp",
         wf_uuid=None,
-        db_file=None,
+        db_file=">>db_file<<",
         prev_calc_dir=None,
         irvsp_out=None,
         vasp_cmd=None,

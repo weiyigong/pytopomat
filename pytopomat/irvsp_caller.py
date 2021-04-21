@@ -185,7 +185,7 @@ class IRVSPOutput(MSONable):
 
     def _parse_stdout(self, irvsp_output, kpoints):
 
-        try:
+        # try:
             with open(irvsp_output, "r") as file:
                 lines = file.readlines()
 
@@ -253,10 +253,13 @@ class IRVSPOutput(MSONable):
                 for idx, line in enumerate(lines[block_start:]):
                     if line.startswith("k = "):  # New kvec
                         line_list = line.split(" ")[2:]
-                        kvec = tuple([float(i) for i in line_list])
-                        print(kvec)
+                        try:
+                            kvec = tuple([float(i) for i in line_list])
+                        except:
+                            continue
                         if kvec not in trim_dict.keys():
                             continue
+                            print(kvec)
                         trim_label = trim_dict[kvec]
                         kpt_wanted = True
 
@@ -328,8 +331,8 @@ class IRVSPOutput(MSONable):
 
             self.parity_eigenvals = parity_eigenvals
 
-        except Exception as er:
-            warnings.warn(
-                "irvsp output not found. Setting instance attributes from direct inputs!"
-            )
-            print(er)
+        # except Exception as er:
+        #     warnings.warn(
+        #         "irvsp output not found. Setting instance attributes from direct inputs!"
+        #     )
+        #     print(er)
