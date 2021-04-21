@@ -142,7 +142,7 @@ class IRVSPToDb(FiretaskBase):
         db_file = env_chk(self.get("db_file"), fw_spec)
         if not db_file:
             with open("irvsp.json", "w") as f:
-                f.write(json.dumps(d, default=DATETIME_HANDLER))
+                f.write(json.dumps(d, default=DATETIME_HANDLER, indent=4))
         else:
             db = VaspCalcDb.from_db_file(db_file, admin=True)
             db.collection = db.db["irvsp"]
