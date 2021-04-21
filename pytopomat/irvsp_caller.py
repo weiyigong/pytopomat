@@ -179,7 +179,7 @@ class IRVSPOutput(MSONable):
         self.soc = soc
         self.spin_polarized = spin_polarized
         self.parity_eigenvals = parity_eigenvals
-        self.kpoints = Kpoints.from_file("/Users/jeng-yuantsai/anaconda3/envs/workflow/lib/python3.7/site-packages/pytopomat/pytopomat/tests/irvsp_read_ir/launcher_2021-04-17-06-51-55-570379/KPOINTS")
+        self.kpoints = Kpoints.from_file("KPOINTS")
         self._parse_stdout(irvsp_output)
 
     def _parse_stdout(self, irvsp_output):
