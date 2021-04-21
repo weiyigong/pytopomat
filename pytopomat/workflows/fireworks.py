@@ -15,6 +15,7 @@ from atomate.common.firetasks.glue_tasks import PassCalcLocs, CopyFiles
 from atomate.vasp.firetasks.parse_outputs import VaspToDb
 from atomate.vasp.firetasks.glue_tasks import CopyVaspOutputs
 
+
 from pytopomat.workflows.firetasks import (
     RunIRVSP,
     IRVSPToDb,
@@ -37,7 +38,7 @@ class IrvspFW(Firework):
         structure=None,
         name="irvsp",
         wf_uuid=None,
-        db_file=">>db_file<<",
+        db_file=DB_FILE,
         prev_calc_dir=None,
         irvsp_out=None,
         vasp_cmd=None,
@@ -101,7 +102,7 @@ class StandardizeFW(Firework):
         parents=None,
         structure=None,
         name="standardize",
-        db_file=None,
+        db_file=DB_FILE,
         prev_calc_dir=None,
         vasp_cmd=None,
         **kwargs

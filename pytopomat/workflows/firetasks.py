@@ -29,6 +29,7 @@ from fireworks.utilities.fw_serializers import DATETIME_HANDLER
 from atomate.utils.utils import env_chk, get_logger
 from atomate.vasp.database import VaspCalcDb
 
+
 logger = get_logger(__name__)
 
 
