@@ -240,7 +240,10 @@ class IRVSPOutput(MSONable):
                 except Exception as er:
                     print(er)
                 else:
-                    trim_dict.pop(None)
+                    try:
+                        trim_dict.pop(None)
+                    except Exception:
+                        pass
                 trim_dict = {pt: label for (pt, label) in zip([(round(pt[0], 3), round(pt[1], 3), round(pt[2], 3))
                                                                for pt in list(trim_dict.values())], trim_dict.keys())}
                 #*******
