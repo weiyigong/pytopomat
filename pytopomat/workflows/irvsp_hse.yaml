@@ -6,7 +6,7 @@ fireworks:
 - fw: atomate.vasp.fireworks.core.StaticFW
   params:
     parents: 1
-- fw: atomate.vasp.fireworks.core.NonSCFFW
+- fw: atomate.vasp.fireworks.core.HSEBSFW
   params:
     parents: 2
     mode: line
