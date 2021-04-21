@@ -42,6 +42,7 @@ class IrvspFW(Firework):
         prev_calc_dir=None,
         irvsp_out=None,
         vasp_cmd=None,
+        additional_fields=None,
         **kwargs
     ):
         """
@@ -88,7 +89,7 @@ class IrvspFW(Firework):
                 RunIRVSP(),
                 PassCalcLocs(name=name),
                 IRVSPToDb(db_file=db_file, wf_uuid=wf_uuid,
-                    irvsp_out=irvsp_out),
+                    irvsp_out=irvsp_out, additional_fields=additional_fields),
             ]
         )
 
