@@ -141,6 +141,7 @@ class IRVSPToDb(FiretaskBase):
 
         # store the results
         db_file = env_chk(self.get("db_file"), fw_spec)
+        print(db_file)
         if not db_file:
             with open("irvsp.json", "w") as f:
                 f.write(json.dumps(d, default=DATETIME_HANDLER, indent=4))
