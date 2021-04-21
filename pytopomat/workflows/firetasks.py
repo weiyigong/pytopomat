@@ -27,7 +27,7 @@ from fireworks import explicit_serialize, FiretaskBase, FWAction
 from fireworks.utilities.fw_serializers import DATETIME_HANDLER
 
 from atomate.utils.utils import env_chk, get_logger
-from atomate.atomate.utils.database import CalcDb
+from atomate.utils.database import CalcDb
 from atomate.vasp.database import VaspCalcDb
 
 
