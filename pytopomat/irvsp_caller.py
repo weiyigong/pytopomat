@@ -37,7 +37,7 @@ class IRVSPCaller:
         "Please follow the instructions in https://arxiv.org/pdf/2002.04032.pdf\n"
         "https://github.com/zjwang11/irvsp/blob/master/src_irvsp_v2.tar.gz",
     )
-    def __init__(self, folder_name, set_spn):
+    def __init__(self, folder_name, set_spn=None):
         """
         Run irvsp to compute irreducible representations (irreps) of electronic states from wavefunctions (WAVECAR) and
         symmetry operations (OUTCAR).
