@@ -254,10 +254,10 @@ class IRVSPOutput(MSONable):
                     if line.startswith("k = "):  # New kvec
                         line_list = line.split(" ")[2:]
                         try:
-                            kvec = tuple([float(i) for i in line_list])
+                            kvec = tuple([round(float(i),3) for i in line_list])
                         except:
                             continue
-                        if kvec not in trim_dict.keys():
+                        if kvec not in list(trim_dict.keys()):
                             continue
                             print(kvec)
                         trim_label = trim_dict[kvec]
