@@ -91,11 +91,11 @@ class IRVSPCaller:
         self.output = None
 
         # Process output
-        if path.isfile("outir.txt"):
-            self.output = IRVSPOutput("outir.txt")
-
-        else:
-            raise FileNotFoundError()
+        # if path.isfile("outir.txt"):
+        #     self.output = IRVSPOutput("outir.txt")
+        #
+        # else:
+        #     raise FileNotFoundError()
 
     @staticmethod
     def modify_outcar(name="OUTCAR.bkp"):
@@ -180,7 +180,6 @@ class IRVSPOutput(MSONable):
         self.soc = soc
         self.spin_polarized = spin_polarized
         self.parity_eigenvals = parity_eigenvals
-        self.kpoints = kpoints
         self._parse_stdout(irvsp_output, kpoints)
 
     def _parse_stdout(self, irvsp_output, kpoints):
