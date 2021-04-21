@@ -183,7 +183,7 @@ class IRVSPOutput(MSONable):
         self.kpoints = kpoints
         self._parse_stdout(irvsp_output, kpoints)
 
-    def _parse_stdout(self, irvsp_output):
+    def _parse_stdout(self, irvsp_output, kpoints):
 
         # try:
             with open(irvsp_output, "r") as file:
@@ -234,7 +234,7 @@ class IRVSPOutput(MSONable):
                 # ]
 
                 # trim_dict = {pt: label for (pt, label) in zip(trim_pts, trim_labels)}
-                trim_dict = dict(zip(self.kpoints.labels, self.kpoints.kpts))
+                trim_dict = dict(zip(kpoints.labels, kpoints.kpts))
                 trim_dict.pop(None)
                 trim_dict = {pt: label for (pt, label) in zip([(round(pt[0], 3), round(pt[1], 3), round(pt[2], 3))
                                                                for pt in list(trim_dict.values())], trim_dict.keys())}
