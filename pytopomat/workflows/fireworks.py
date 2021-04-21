@@ -63,6 +63,9 @@ class IrvspFW(Firework):
         fw_name = "{}-{}".format(
             structure.composition.reduced_formula if structure else "unknown", name
         )
+        if not additional_fields:
+            additional_fields = {}
+        additional_fields.update({'task_label': name})
 
         t = []
 
