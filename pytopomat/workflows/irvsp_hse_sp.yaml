@@ -1,14 +1,8 @@
 fireworks:
-- fw: atomate.vasp.fireworks.core.OptimizeFW
-- fw: pytopomat.workflows.fireworks.StandardizeFW
-  params:
-    parents: 0
 - fw: atomate.vasp.fireworks.core.StaticFW
-  params:
-    parents: 1
 - fw: atomate.vasp.fireworks.core.HSEBSFW
   params:
-    parents: 2
+    parents: 0
     mode: line
     input_set_overrides:
       kpoints_line_density: 0.5
@@ -16,4 +10,4 @@ fireworks:
         two_d_kpoints: True
 - fw: pytopomat.workflows.fireworks.IrvspFW
   params:
-    parents: 3
+    parents: 1
