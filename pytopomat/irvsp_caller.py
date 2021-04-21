@@ -238,7 +238,6 @@ class IRVSPOutput(MSONable):
                 trim_dict.pop(None)
                 trim_dict = {pt: label for (pt, label) in zip([(round(pt[0], 3), round(pt[1], 3), round(pt[2], 3))
                                                                for pt in list(trim_dict.values())], trim_dict.keys())}
-                print(trim_dict)
                 #*******
                 # Dicts with kvec index as keys
                 parity_eigenvals = {}
@@ -259,7 +258,6 @@ class IRVSPOutput(MSONable):
                             continue
                         if kvec not in list(trim_dict.keys()):
                             continue
-                            print(kvec)
                         trim_label = trim_dict[kvec]
                         kpt_wanted = True
 

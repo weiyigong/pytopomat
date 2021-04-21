@@ -83,7 +83,6 @@ class IrvspFW(Firework):
             )
         else:
             raise ValueError("Must specify structure or previous calculation")
-        print(db_file)
         t.extend(
             [
                 RunIRVSP(),
