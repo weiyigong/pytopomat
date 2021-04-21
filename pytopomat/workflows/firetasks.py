@@ -139,7 +139,7 @@ class IRVSPToDb(FiretaskBase):
         d["efermi"] = fw_spec["efermi"]
         d["structure"] = fw_spec["structure"]
         d["irvsp"] = irvsp
-
+        d["dir_name"] = os.getcwd()
         # store the results
         db_file = env_chk(self.get("db_file"), fw_spec)
         if not db_file:
