@@ -13,7 +13,7 @@ from monty.json import MontyEncoder, jsanitize
 from spglib import standardize_cell
 
 from pymatgen.core.structure import Structure
-from pymatgen.io.vasp import Incar, Outcar
+from pymatgen.io.vasp import Incar, Outcar, Kpoints
 
 from pytopomat.irvsp_caller import IRVSPCaller, IRVSPOutput
 from pytopomat.vasp2trace_caller import (
@@ -52,12 +52,13 @@ class RunIRVSP(FiretaskBase):
             outcar = Outcar(wd + "/OUTCAR")
             efermi = outcar.efermi
 
+            kpoints = Kpoints.from_file(wd + "/KPOINTS")
         except:
             formula = None
             structure = None
             efermi = None
 
-        data = IRVSPOutput(wd + "/outir.txt")
+        data = IRVSPOutput(wd + "/outir.txt", kpoints)
 
         return FWAction(
             update_spec={

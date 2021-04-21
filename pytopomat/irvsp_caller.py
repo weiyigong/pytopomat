@@ -151,6 +151,7 @@ class IRVSPOutput(MSONable):
     def __init__(
         self,
         irvsp_output,
+        kpoints,
         symmorphic=None,
         inversion=None,
         soc=None,
@@ -179,7 +180,7 @@ class IRVSPOutput(MSONable):
         self.soc = soc
         self.spin_polarized = spin_polarized
         self.parity_eigenvals = parity_eigenvals
-        self.kpoints = Kpoints.from_file("KPOINTS")
+        self.kpoints = kpoints
         self._parse_stdout(irvsp_output)
 
     def _parse_stdout(self, irvsp_output):
