@@ -1,4 +1,5 @@
 from atomate.vasp.workflows.base.core import get_wf
+from atomate.vasp.database import VaspCalcDb
 from fireworks import LaunchPad, Workflow
 import os
 from atomate.vasp.powerups import (
@@ -10,7 +11,6 @@ from atomate.vasp.powerups import (
     clean_up_files,
     add_modify_kpoints
 )
-from qubitPack.tool_box import get_db
 import numpy as np
 from pymatgen.core.structure import Structure, SymmOp
 from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
@@ -20,7 +20,7 @@ from pytopomat.workflows.fireworks import IrvspFW
 from mpinterfaces.utils import ensure_vacuum
 
 
-c2db = get_db("2dMat_from_cmr_fysik", "2dMaterial_v1", port=12345, user="adminUser", password="qiminyan").collection
+c2db = VaspCalcDb.from_db_file("c2db.json")
 for spg in c2db.distinct("spacegroup"):
     print(spg)
     e = c2db.find_one({"spacegroup": spg, "magstate":"NM"})
