@@ -164,7 +164,7 @@ class IrvspAllFW(Firework):
             ]
         )
 
-        super(IrvspFW, self).__init__(t, parents=parents, name=fw_name, **kwargs)
+        super(IrvspAllFW, self).__init__(t, parents=parents, name=fw_name, **kwargs)
 
 
 
