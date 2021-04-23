@@ -3,13 +3,15 @@ fireworks:
   params:
     override_default_vasp_params:
       user_incar_settings:
-        EDIFF: 1e-4
+        EDIFF: 1E-4
         EDIFFG: -0.01
-        ENCUT: 800
+#        ENCUT: 800
         ISPIN: 1
         SIGMA: 0.05
         ISIF: 2
         LCHARG: False
+      user_kpoints_settings:
+        reciprocal_density: 36
 - fw: atomate.vasp.fireworks.core.StaticFW
   params:
     parents: 0
@@ -17,8 +19,8 @@ fireworks:
       reciprocal_density: 144
       other_params:
         user_incar_settings:
-          EDIFF: 1e-5
-          ENCUT: 800
+          EDIFF: 1E-5
+#          ENCUT: 800
           ISPIN: 1
           SIGMA: 0.05
 - fw: atomate.vasp.fireworks.core.HSEBSFW
@@ -31,8 +33,8 @@ fireworks:
       other_params:
         two_d_kpoints: True
         user_incar_settings:
-          EDIFF: 1e-5
-          ENCUT: 800
+          EDIFF: 1E-5
+#          ENCUT: 800
           ISPIN: 1
           LWAVE: True
 
