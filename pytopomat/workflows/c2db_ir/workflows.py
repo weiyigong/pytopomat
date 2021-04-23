@@ -41,7 +41,7 @@ for spg in c2db.distinct("spacegroup"):
     st = Structure.from_file("POSCAR_std")
     os.chdir("..")
 
-    wf = get_wf(st, "/home/tug03990/site-packages/pytopomat/pytopomat/workflows/irvsp_hse_sp.yaml")
+    wf = get_wf(st, "../irvsp_hse_sp.yaml")
     fws = wf.fws[:3]
     fw_irvsp = IrvspFW(structure=st, parents=fws[-1], additional_fields={"c2db_uid": e["uid"],
                                                                         "spg_c2db": e["spacegroup"],
