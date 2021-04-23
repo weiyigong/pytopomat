@@ -59,3 +59,4 @@ for spg in c2db.distinct("spacegroup"):
     wf = preserve_fworker(wf)
     wf.name = wf.name + ":{}".format(spg)
     # lpad.add_wf(wf)
+    print(wf)
