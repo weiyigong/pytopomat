@@ -263,7 +263,6 @@ class IRVSPOutput(MSONable):
 
                 kpt_wanted, trace_start = False, False
                 for idx, line in enumerate(lines[block_start:]):
-                    print(line)
                     if line.startswith("k = "):  # New kvec
                         line_list = line.split(" ")[2:]
                         try:
@@ -285,6 +284,7 @@ class IRVSPOutput(MSONable):
 
 
                     if "bnd ndg" in line and kpt_wanted:  # find inversion symmop position
+                        print(line)
                         trace_start = True  # Start of block of traces
                         bnds, ndgs, bnd_evs, inv_evs, reps = [], [], [], [], []
                         line_list = line.strip().split(" ")
