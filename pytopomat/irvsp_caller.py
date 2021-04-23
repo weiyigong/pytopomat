@@ -268,6 +268,7 @@ class IRVSPOutput(MSONable):
                         print(line_list)
                         try:
                             kvec = tuple([round(float(i),3) for i in line_list])
+                            print(kvec)
                         except:
                             continue
                         if kvec not in list(trim_dict.keys()):
