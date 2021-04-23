@@ -23,6 +23,9 @@ fireworks:
 #          ENCUT: 800
         ISPIN: 1
         SIGMA: 0.05
+        LAECHG: False
+        LWAVE: True
+        LCHARG: False
 - fw: atomate.vasp.fireworks.core.HSEBSFW
   params:
     parents: 1
