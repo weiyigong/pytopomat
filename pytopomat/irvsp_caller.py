@@ -93,7 +93,11 @@ class IRVSPCaller:
 
         # Process output
         if path.isfile("outir.txt"):
-            self.output = IRVSPOutput("outir.txt", Kpoints.from_file("KPOINTS"))
+            try:
+                self.output = IRVSPOutput("outir.txt", Kpoints.from_file("KPOINTS"))
+            except Exception as er:
+                print(er)
+                self.output = IRVSPOutputAll("outir.txt")
 
         else:
             raise FileNotFoundError()
