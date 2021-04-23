@@ -273,6 +273,7 @@ class IRVSPOutput(MSONable):
                             continue
                         trim_label = trim_dict[kvec]
                         kpt_wanted = True
+                        print(trim_dict)
 
                     if "The point group is" in line and kpt_wanted:
                         point_gp_at_k = line.split("The point group is")[1].strip()
@@ -284,7 +285,6 @@ class IRVSPOutput(MSONable):
 
 
                     if "bnd ndg" in line and kpt_wanted:  # find inversion symmop position
-                        print(line)
                         trace_start = True  # Start of block of traces
                         bnds, ndgs, bnd_evs, inv_evs, reps = [], [], [], [], []
                         line_list = line.strip().split(" ")
