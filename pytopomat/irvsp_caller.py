@@ -290,6 +290,7 @@ class IRVSPOutput(MSONable):
                         symmops = [i for i in line_list if i]
                         inv_num = symmops.index("E") - 3  # subtract bnd, ndg, ev
                         num_ops = len(symmops) - 3  # subtract bnd, ndg, ev
+                        print(line)
                     if kpt_wanted and trace_start and "0" in line:  # full trace line, not a blank line
                         head_line = line.split()
                         try:
@@ -303,7 +304,6 @@ class IRVSPOutput(MSONable):
                         #line_list = [i for i in line_list.split(" ") if i]
 
                         # Check that trace line is complete, no ?? or error
-                        print(line_list)
                         if len(line_list) > 30 and len(line.split("=")) == 2:  # symmops + band eigenval
                             bnd = int(line[:3].strip())  # band index
                             ndg = int(line[3:6].strip())  # band degeneracy
