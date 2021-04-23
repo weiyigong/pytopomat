@@ -1,0 +1,8 @@
+fireworks:
+- fw: atomate.vasp.fireworks.core.OptimizeFW
+- fw: atomate.vasp.fireworks.core.StaticFW
+  params:
+    parents: 0
+- fw: pytopomat.workflows.fireworks.IrvspFW
+  params:
+    parents: 1
