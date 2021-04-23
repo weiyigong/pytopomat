@@ -267,7 +267,10 @@ class IRVSPOutput(MSONable):
                         k_line = line.split(" = ")[1]
                         k_line = k_line.replace("-", " -")
                         k_line = k_line.split(" ")
-                        k_line.remove("")
+                        try:
+                            k_line.remove("")
+                        except Exception:
+                            pass
                         print(k_line)
 
                         try:
