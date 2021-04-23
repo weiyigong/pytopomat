@@ -264,10 +264,13 @@ class IRVSPOutput(MSONable):
                 kpt_wanted, trace_start = False, False
                 for idx, line in enumerate(lines[block_start:]):
                     if line.startswith("k = "):  # New kvec
-                        line_list = line.split(" ")[2:]
-                        print(line_list)
+                        k_line = line.split(" = ")[1]
+                        k_line = k_line.replace("-", " -")
+                        k_line.remove("")
+                        print(k_line)
+
                         try:
-                            kvec = tuple([round(float(i),3) for i in line_list])
+                            kvec = tuple([round(float(i),3) for i in k_line])
                             print(kvec)
                         except:
                             continue
