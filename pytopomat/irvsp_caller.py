@@ -429,18 +429,18 @@ class IRVSPOutputAll(MSONable):
             # ]
 
             # trim_dict = {pt: label for (pt, label) in zip(trim_pts, trim_labels)}
-            trim_dict = dict(zip(kpoints.labels, kpoints.kpts))
-            if "None" in trim_dict:
-                trim_dict.pop("None")
-            if None in trim_dict:
-                trim_dict.pop(None)
-            if "" in trim_dict:
-                trim_dict.pop(None)
-            if " " in trim_dict:
-                trim_dict.pop(None)
-
-            trim_dict = {pt: label for (pt, label) in zip([(round(pt[0], 3), round(pt[1], 3), round(pt[2], 3))
-                                                           for pt in list(trim_dict.values())], trim_dict.keys())}
+            # trim_dict = dict(zip(kpoints.labels, kpoints.kpts))
+            # if "None" in trim_dict:
+            #     trim_dict.pop("None")
+            # if None in trim_dict:
+            #     trim_dict.pop(None)
+            # if "" in trim_dict:
+            #     trim_dict.pop(None)
+            # if " " in trim_dict:
+            #     trim_dict.pop(None)
+            #
+            # trim_dict = {pt: label for (pt, label) in zip([(round(pt[0], 3), round(pt[1], 3), round(pt[2], 3))
+            #                                                for pt in list(trim_dict.values())], trim_dict.keys())}
             #*******
             # Dicts with kvec index as keys
             parity_eigenvals = {}
