@@ -266,6 +266,7 @@ class IRVSPOutput(MSONable):
                     if line.startswith("k = "):  # New kvec
                         k_line = line.split(" = ")[1]
                         k_line = k_line.replace("-", " -")
+                        k_line = k_line.split(" ")
                         k_line.remove("")
                         print(k_line)
 
