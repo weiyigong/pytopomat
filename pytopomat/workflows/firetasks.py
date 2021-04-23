@@ -15,7 +15,7 @@ from spglib import standardize_cell
 from pymatgen.core.structure import Structure
 from pymatgen.io.vasp import Incar, Outcar, Kpoints
 
-from pytopomat.irvsp_caller import IRVSPCaller, IRVSPOutput
+from pytopomat.irvsp_caller import IRVSPCaller, IRVSPOutput, IRVSPOutputAll
 from pytopomat.vasp2trace_caller import (
     Vasp2TraceCaller,
     Vasp2Trace2Caller,
@@ -61,6 +61,42 @@ class RunIRVSP(FiretaskBase):
             efermi = None
 
         data = IRVSPOutput(wd + "/outir.txt", kpoints)
+
+        return FWAction(
+            update_spec={
+                "irvsp_out": data.as_dict(),
+                "structure": structure,
+                "formula": formula,
+                "efermi": efermi,
+            }
+        )
+
+@explicit_serialize
+class RunIRVSPAll(FiretaskBase):
+    """
+    Execute IRVSP in current directory.
+
+    """
+
+    def run_task(self, fw_spec):
+
+        wd = os.getcwd()
+        IRVSPCaller(wd)
+
+        try:
+            raw_struct = Structure.from_file(wd + "/POSCAR")
+            formula = raw_struct.composition.formula
+            structure = raw_struct.as_dict()
+
+            outcar = Outcar(wd + "/OUTCAR")
+            efermi = outcar.efermi
+
+        except:
+            formula = None
+            structure = None
+            efermi = None
+
+        data = IRVSPOutputAll(wd + "/outir.txt")
 
         return FWAction(
             update_spec={
