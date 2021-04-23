@@ -1,16 +1,41 @@
 fireworks:
 - fw: atomate.vasp.fireworks.core.OptimizeFW
+  params:
+    override_default_vasp_params:
+      user_incar_settings:
+        EDIFF: 1e-4
+        EDIFFG: -0.01
+        ENCUT: 800
+        ISPIN: 1
+        SIGMA: 0.05
+        ISIF: 2
+        LCHARG: False
 - fw: atomate.vasp.fireworks.core.StaticFW
   params:
     parents: 0
+    vasp_input_set_params:
+      reciprocal_density: 144
+      other_params:
+        user_incar_settings:
+          EDIFF: 1e-5
+          ENCUT: 800
+          ISPIN: 1
+          SIGMA: 0.05
 - fw: atomate.vasp.fireworks.core.HSEBSFW
   params:
     parents: 1
     mode: line
     input_set_overrides:
       kpoints_line_density: 0.5
+      reciprocal_density: 144
       other_params:
         two_d_kpoints: True
+        user_incar_settings:
+          EDIFF: 1e-5
+          ENCUT: 800
+          ISPIN: 1
+          LWAVE: True
+
 - fw: pytopomat.workflows.fireworks.IrvspFW
   params:
     parents: 2
