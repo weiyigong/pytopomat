@@ -17,6 +17,7 @@ from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
 from pymatgen.io.vasp.sets import MPRelaxSet
 from subprocess import call
 from pytopomat.workflows.fireworks import IrvspFW
+from mpinterfaces.utils import ensure_vacuum
 
 
 c2db = get_db("2dMat_from_cmr_fysik", "2dMaterial_v1", port=12345, user="adminUser", password="qiminyan").collection
@@ -31,6 +32,7 @@ for spg in c2db.distinct("spacegroup"):
     os.makedirs("symmetrized_st", exist_ok=True)
     os.chdir("symmetrized_st")
     st = Structure.from_dict(st)
+    st = ensure_vacuum(st, 15)
     st.to("poscar", "POSCAR")
     call("phonopy --symmetry --tolerance 0.01 -c POSCAR".split(" "))
     st = Structure.from_file("PPOSCAR")
@@ -51,9 +53,8 @@ for spg in c2db.distinct("spacegroup"):
     lpad = LaunchPad.from_file(os.path.expanduser(
         os.path.join("~", "config/project/testIR/irvsp_test/my_launchpad.yaml")))
     wf = clean_up_files(wf, ("WAVECAR*", "CHGCAR*"), wf.fws[-1].name, task_name_constraint=wf.fws[-1].tasks[-1].fw_name)
-    magmom = MPRelaxSet(st).incar.get("MAGMOM", None)
-    wf = add_modify_incar(wf, {"incar_update": {"LWAVE": True, "ISYM":3, "MAGMOM": magmom}}, "line")
-    wf = add_modify_incar(wf, {"incar_update": {"ISPIN":2}})
+    uis_encut = MPRelaxSet(st).incar.get("ENCUT", None)*1.3
+    wf = add_modify_incar(wf, {"incar_update": {"ENCUT": uis_encut}})
     wf = set_execution_options(wf, category="irvsp_test")
     wf = preserve_fworker(wf)
     wf.name = wf.name + ":{}".format(spg)
