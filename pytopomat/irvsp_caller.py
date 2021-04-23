@@ -313,7 +313,7 @@ class IRVSPOutput(MSONable):
                             # if not np.isclose(inv_ev%1.0, 0.0, rtol=0, atol=0.03) or \
                             #    not np.isclose(inv_ev%1.0, 1.0, rtol=0, atol=0.03):
                             #    warnings.warn("IRVSP output data has non-integer parity eigenvalues!")
-
+                            print(bnd)
                             bnds.append(bnd)
                             ndgs.append(ndg)
                             bnd_evs.append(bnd_ev)
