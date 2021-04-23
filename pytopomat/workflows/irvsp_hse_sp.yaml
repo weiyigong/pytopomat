@@ -3,7 +3,7 @@ fireworks:
   params:
     override_default_vasp_params:
       user_incar_settings:
-        EDIFF: 1E-4
+        EDIFF: 1.0E-4
         EDIFFG: -0.01
 #        ENCUT: 800
         ISPIN: 1
@@ -19,7 +19,7 @@ fireworks:
       reciprocal_density: 144
       other_params:
         user_incar_settings:
-          EDIFF: 1E-5
+          EDIFF: 1.0E-5
 #          ENCUT: 800
           ISPIN: 1
           SIGMA: 0.05
@@ -33,7 +33,7 @@ fireworks:
       other_params:
         two_d_kpoints: True
         user_incar_settings:
-          EDIFF: 1E-5
+          EDIFF: 1.0E-5
 #          ENCUT: 800
           ISPIN: 1
           LWAVE: True
