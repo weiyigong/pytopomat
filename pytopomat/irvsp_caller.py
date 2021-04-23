@@ -271,18 +271,14 @@ class IRVSPOutput(MSONable):
                             k_line.remove("")
                         except Exception:
                             pass
-                        print(k_line)
-
                         try:
                             kvec = tuple([round(float(i),3) for i in k_line])
-                            print(kvec)
                         except:
                             continue
                         if kvec not in list(trim_dict.keys()):
                             continue
                         trim_label = trim_dict[kvec]
                         kpt_wanted = True
-                        print(trim_dict)
 
                     if "The point group is" in line and kpt_wanted:
                         point_gp_at_k = line.split("The point group is")[1].strip()
