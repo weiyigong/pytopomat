@@ -265,6 +265,7 @@ class IRVSPOutput(MSONable):
                 for idx, line in enumerate(lines[block_start:]):
                     if line.startswith("k = "):  # New kvec
                         line_list = line.split(" ")[2:]
+                        print(line_list)
                         try:
                             kvec = tuple([round(float(i),3) for i in line_list])
                         except:
