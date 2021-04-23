@@ -378,7 +378,7 @@ class IRVSPOutputAll(MSONable):
         self.parity_eigenvals = parity_eigenvals
         self._parse_stdout(irvsp_output)
 
-    def _parse_stdout(self, irvsp_output, kpoints):
+    def _parse_stdout(self, irvsp_output):
 
         # try:
         with open(irvsp_output, "r") as file:
