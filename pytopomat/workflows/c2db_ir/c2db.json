@@ -1,0 +1,11 @@
+{
+  "host": "localhost",
+  "port": 12345,
+  "database": "2dMat_from_cmr_fysik",
+  "collection": "2dMaterial_v1",
+  "admin_user": "adminUser",
+  "admin_password": "qiminyan",
+  "readonly_user": "readUser",
+  "readonly_password": "qiminyan",
+  "aliases": {}
+}
