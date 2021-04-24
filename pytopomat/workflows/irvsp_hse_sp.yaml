@@ -30,6 +30,7 @@ fireworks:
   params:
     parents: 1
     mode: line
+    cp_file_from_prev: "WAVECAR*"
     input_set_overrides:
       kpoints_line_density: 0.5
       reciprocal_density: 144
