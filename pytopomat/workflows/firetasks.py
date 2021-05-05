@@ -54,12 +54,12 @@ class RunIRVSP(FiretaskBase):
             outcar = Outcar(wd + "/OUTCAR")
             efermi = outcar.efermi
 
-            kpoints = Kpoints.from_file(wd + "/KPOINTS")
         except:
             formula = None
             structure = None
             efermi = None
 
+        kpoints = Kpoints.from_file(wd + "/KPOINTS")
         data = IRVSPOutput(wd + "/outir.txt", kpoints)
 
         return FWAction(
@@ -90,17 +90,23 @@ class RunIRVSPAll(FiretaskBase):
 
             outcar = Outcar(wd + "/OUTCAR")
             efermi = outcar.efermi
+            kpoints = Kpoints.from_file(wd + "/KPOINTS")
 
         except:
             formula = None
             structure = None
             efermi = None
 
-        data = IRVSPOutputAll(wd + "/outir.txt")
+        kpoints = Kpoints.from_file(wd + "/KPOINTS")
+        general = IRVSPOutputAll(wd + "/outir.txt")
+        high_sym_data = IRVSPOutput(wd + "/outir.txt", kpoints)
+        data = general.as_dict().copy()
+        data.pop("parity_eigenvals")
+        data.update({"high_sym": high_sym_data.parity_eigenvals, "general": general.parity_eigenvals})
 
         return FWAction(
             update_spec={
-                "irvsp_out": data.as_dict(),
+                "irvsp_out": data,
                 "structure": structure,
                 "formula": formula,
                 "efermi": efermi,
