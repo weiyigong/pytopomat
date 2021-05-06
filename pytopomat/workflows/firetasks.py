@@ -90,7 +90,6 @@ class RunIRVSPAll(FiretaskBase):
 
             outcar = Outcar(wd + "/OUTCAR")
             efermi = outcar.efermi
-            kpoints = Kpoints.from_file(wd + "/KPOINTS")
 
         except:
             formula = None
@@ -102,6 +101,7 @@ class RunIRVSPAll(FiretaskBase):
         high_sym_data = IRVSPOutput(wd + "/outir.txt", kpoints)
         data = general.as_dict().copy()
         data.pop("parity_eigenvals")
+        print(data)
         data.update({"high_sym": high_sym_data.parity_eigenvals, "general": general.parity_eigenvals})
 
         return FWAction(
