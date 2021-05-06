@@ -100,9 +100,7 @@ class RunIRVSPAll(FiretaskBase):
         general = IRVSPOutputAll(wd + "/outir.txt")
         high_sym_data = IRVSPOutput(wd + "/outir.txt", kpoints)
         data = general.as_dict().copy()
-        data.pop("parity_eigenvals")
-        data.update({"high_sym": high_sym_data.parity_eigenvals, "general": general.parity_eigenvals})
-        print(data)
+        data["parity_eigenvals"] = {"high_sym": high_sym_data.parity_eigenvals, "general": general.parity_eigenvals}
 
         return FWAction(
             update_spec={
