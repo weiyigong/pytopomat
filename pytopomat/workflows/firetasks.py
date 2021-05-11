@@ -164,7 +164,7 @@ class IRVSPToDb(FiretaskBase):
     """
 
     required_params = ["irvsp_out", "wf_uuid"]
-    optional_params = ["db_file", "additional_fields"]
+    optional_params = ["db_file", "additional_fields", "collection_name"]
 
     def run_task(self, fw_spec):
 
@@ -187,7 +187,7 @@ class IRVSPToDb(FiretaskBase):
                 f.write(json.dumps(d, default=DATETIME_HANDLER, indent=4))
         else:
             db = VaspCalcDb.from_db_file(db_file, admin=True)
-            db.collection = db.db["ir_data"]
+            db.collection = db.db[self.get("collection_name", db.collection.name)]
             t_id = db.insert(d)
             logger.info("IRVSP calculation complete.")
         return FWAction()
