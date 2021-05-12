@@ -187,7 +187,8 @@ class IRVSPToDb(FiretaskBase):
                 f.write(json.dumps(d, default=DATETIME_HANDLER, indent=4))
         else:
             db = VaspCalcDb.from_db_file(db_file, admin=True)
-            db.collection = db.db[self.get("collection_name", str(db.collection.name))]
+            print(self.get("collection_name", db.collection.name))
+            db.collection = db.db[self.get("collection_name", db.collection.name)]
             t_id = db.insert(d)
             logger.info("IRVSP calculation complete.")
         return FWAction()
