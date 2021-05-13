@@ -44,7 +44,7 @@ class IrvspFW(Firework):
         prev_calc_dir=None,
         irvsp_out=None,
         additional_fields=None,
-        irvsp_to_db_kwargs=None
+        irvsp_to_db_kwargs=None,
         **kwargs
     ):
         """
