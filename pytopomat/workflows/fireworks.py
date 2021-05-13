@@ -43,8 +43,7 @@ class IrvspFW(Firework):
         db_file=DB_FILE,
         prev_calc_dir=None,
         irvsp_out=None,
-        additional_fields=None,
-        irvsp_to_db_kwargs=None,
+        irvsptodb_kwargs=None,
         **kwargs
     ):
         """
@@ -65,12 +64,11 @@ class IrvspFW(Firework):
         fw_name = "{}-{}".format(
             structure.composition.reduced_formula if structure else "unknown", name
         )
-        if not additional_fields:
-            additional_fields = {}
-        additional_fields.update({'task_label': name})
 
-        if not irvsp_to_db_kwargs:
-            irvsp_to_db_kwargs = {}
+        irvsptodb_kwargs = irvsptodb_kwargs or {}
+        if "additional_fields" not in irvsptodb_kwargs:
+            irvsptodb_kwargs["additional_fields"] = {}
+        irvsptodb_kwargs["additional_fields"]["task_label"] = name
 
         t = []
 
@@ -102,7 +100,7 @@ class IrvspFW(Firework):
             [
                 PassCalcLocs(name=name),
                 IRVSPToDb(db_file=db_file, wf_uuid=wf_uuid,
-                          irvsp_out=irvsp_out, additional_fields=additional_fields, **irvsp_to_db_kwargs),
+                          irvsp_out=irvsp_out, **irvsp_to_db_kwargs),
             ]
         )
 
