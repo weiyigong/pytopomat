@@ -100,7 +100,7 @@ class IrvspFW(Firework):
             [
                 PassCalcLocs(name=name),
                 IRVSPToDb(db_file=db_file, wf_uuid=wf_uuid,
-                          irvsp_out=irvsp_out, **irvsp_to_db_kwargs),
+                          irvsp_out=irvsp_out, **irvsptodb_kwargs),
             ]
         )
 
