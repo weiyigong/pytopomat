@@ -493,16 +493,13 @@ class IRVSPOutputAll(MSONable):
                         bdx = int(head_line[0])
                     except:
                         continue
-                    line_list = line[6:].strip()
-                    line_list = line_list.split("=", 1)[0]
+                    line_list = line[6:].strip().split("=", 1)[0]
 
                     # delete irrep label at end of line
                     #line_list = [i for i in line_list.split(" ") if i]
 
                     # Check that trace line is complete, no ?? or error
-                    print(line_list)
-                    print("="*30)
-                    if len(line_list) > 30 and len(line.split("=")) == 2:  # symmops + band eigenval
+                    if len(line_list) >= 20 and len(line.split("=")) == 2:  # symmops + band eigenval
                         bnd = int(line[:3].strip())  # band index
                         ndg = int(line[3:6].strip())  # band degeneracy
                         bnd_ev = float(line[6:16].strip())
