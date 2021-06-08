@@ -462,7 +462,6 @@ class IRVSPOutputAll(MSONable):
 
             kpt_wanted, trace_start = False, False
             for idx, line in enumerate(lines[block_start:]):
-                print(line)
                 if line.startswith("k = "):  # New kvec
                     line_list = line.split(" ")[2:]
                     try:
@@ -501,6 +500,7 @@ class IRVSPOutputAll(MSONable):
                     #line_list = [i for i in line_list.split(" ") if i]
 
                     # Check that trace line is complete, no ?? or error
+                    print(line)
                     if len(line_list) > 30 and len(line.split("=")) == 2:  # symmops + band eigenval
                         bnd = int(line[:3].strip())  # band index
                         ndg = int(line[3:6].strip())  # band degeneracy
