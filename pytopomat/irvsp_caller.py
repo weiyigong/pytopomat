@@ -500,8 +500,8 @@ class IRVSPOutputAll(MSONable):
                     #line_list = [i for i in line_list.split(" ") if i]
 
                     # Check that trace line is complete, no ?? or error
+                    print(line_list)
                     if len(line_list) > 30 and len(line.split("=")) == 2:  # symmops + band eigenval
-                        print(line)
                         bnd = int(line[:3].strip())  # band index
                         ndg = int(line[3:6].strip())  # band degeneracy
                         bnd_ev = float(line[6:16].strip())
