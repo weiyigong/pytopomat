@@ -37,7 +37,7 @@ class IRVSPCaller:
         "Please follow the instructions in https://arxiv.org/pdf/2002.04032.pdf\n"
         "https://github.com/zjwang11/irvsp/blob/master/src_irvsp_v2.tar.gz",
     )
-    def __init__(self, folder_name, set_spn=None):
+    def __init__(self, folder_name, set_spn=None, symprec=0.01):
         """
         Run irvsp to compute irreducible representations (irreps) of electronic states from wavefunctions (WAVECAR) and
         symmetry operations (OUTCAR).
@@ -65,7 +65,7 @@ class IRVSPCaller:
 
         # Get sg number of structure
         s = Structure.from_file("POSCAR")
-        sga = SpacegroupAnalyzer(s, symprec=0.01)
+        sga = SpacegroupAnalyzer(s, symprec=symprec)
         sgn = set_spn if set_spn else sga.get_space_group_number()
         v = 1  # version 1 of irvsp, symmorphic symmetries
 
