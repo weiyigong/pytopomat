@@ -14,6 +14,7 @@ from monty.os.path import which
 from monty.serialization import loadfn
 
 from pymatgen.symmetry.analyzer import SpacegroupAnalyzer
+from pymatgen.symmetry.groups import SpaceGroup
 from pymatgen.core import Structure
 from pymatgen.io.vasp.outputs import Kpoints
 
