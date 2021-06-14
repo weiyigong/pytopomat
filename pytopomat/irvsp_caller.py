@@ -65,7 +65,7 @@ class IRVSPCaller:
 
         # Get sg number of structure
         s = Structure.from_file("POSCAR")
-        sga = SpacegroupAnalyzer(s, symprec=symprec)
+        sga = SpaceGroup.from_int_number(set_spn).symbol if set_spn else SpacegroupAnalyzer(s, symprec=symprec)
         sgn = set_spn if set_spn else sga.get_space_group_number()
         v = 1  # version 1 of irvsp, symmorphic symmetries
 
@@ -101,6 +101,8 @@ class IRVSPCaller:
 
         else:
             raise FileNotFoundError()
+
+        return sga, sgn
 
     @staticmethod
     def modify_outcar(name="OUTCAR.bkp"):
